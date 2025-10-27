@@ -304,12 +304,6 @@ prisma/
 ├── scripts/                  # Utilidades de BD
 ├── schema.prisma            # Esquema de base de datos
 └── seed.ts                  # Script principal de seeding
-
-docs/                         # Documentación
-├── README.md                # Documentación de Items
-├── README_CART.md           # Documentación de Cart
-├── README_ORDERS.md         # Documentación de Orders
-└── COMMANDS.md              # Comandos de BD
 ```
 
 ### Principios de Arquitectura Hexagonal
