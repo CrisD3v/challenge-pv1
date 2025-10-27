@@ -75,6 +75,13 @@ export interface CartContextType {
   hasPendingOperations: boolean;
 }
 
+export interface OrdersContextType {
+  orders: any[];
+  createOrder: (cartItems: CartItem[]) => Promise<string>;
+  updateOrderStatus: (orderId: string, status: string) => void;
+  isCreatingOrder: boolean;
+}
+
 export interface QueryProviderProps {
   children: React.ReactNode;
 }

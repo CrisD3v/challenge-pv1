@@ -50,6 +50,42 @@ export interface CreateCartItemRequest {
   quantity: number;
 }
 
+export interface CreateOrderRequest {
+  items: Array<{
+    itemType: "PRODUCT" | "EVENT";
+    productId?: string;
+    eventId?: string;
+    quantity: number;
+    unitPrice: number;
+  }>;
+}
+
+export interface ApiOrder {
+  id: string;
+  items: Array<{
+    id: string;
+    itemType: "PRODUCT" | "EVENT";
+    productId?: string;
+    eventId?: string;
+    quantity: number;
+    unitPrice: number;
+    product?: any;
+    event?: any;
+  }>;
+  total: number;
+  status: "PENDING" | "PROCESSING" | "COMPLETED" | "CANCELLED";
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface OrderStats {
+  total: number;
+  pending: number;
+  processing: number;
+  completed: number;
+  cancelled: number;
+}
+
 // Transform functions
 export const transformApiProduct = (apiProduct: ApiProduct) => ({
   id: apiProduct.id,

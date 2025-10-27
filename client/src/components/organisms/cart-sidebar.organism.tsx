@@ -7,6 +7,7 @@ import { Loader2, ShoppingBag, X } from "lucide-react";
 import { CartSidebarProps } from "@/lib/types";
 import { useCart as useCartData } from "@/lib/queries/cart";
 import { useCart } from "@/providers/cart-provider";
+import { useOrders } from "@/providers/orders-provider";
 import Image from "next/image";
 
 export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
@@ -18,6 +19,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
     cart,
     hasPendingOperations,
   } = useCart(); // Providing cart data
+  const { createOrder, isCreatingOrder } = useOrders(); // Crear orden usando Optimistic UI
 
   const { data: cartData } = useCartData(cartId || undefined); // Fetching cart data
 
@@ -55,6 +57,9 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
           quantity: cartItem.quantity,
         };
       });
+
+      // Crear orden usando el sistema optimista
+      await createOrder(normalizedItems);
 
       // Limpiar carrito después de crear la orden
       clearCart();
@@ -213,14 +218,22 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                       className="w-full"
                       size="lg"
                       onClick={handleCheckout}
-                      disabled={cartItems.length === 0}
+                      disabled={isCreatingOrder || cartItems.length === 0}
                     >
-                      Checkout
+                      {isCreatingOrder ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                          Creating Order...
+                        </>
+                      ) : (
+                        "Checkout"
+                      )}
                     </Button>
                     <Button
                       variant="outline"
                       className="w-full bg-transparent"
                       onClick={clearCart}
+                      disabled={isCreatingOrder}
                     >
                       Clear Cart
                     </Button>
