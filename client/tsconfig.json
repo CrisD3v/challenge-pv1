@@ -21,7 +21,10 @@
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
-      "@ui/*": ["./src/components/ui/*"]
+      "@ui/*": ["./src/components/ui/*"],
+      "@api/*": ["./src/lib/api/*"],
+      "@patterns/*": ["./src/lib/patterns/*"],
+      "@queries/*": ["./src/lib/queries/*"]
     }
   },
   "include": [
