@@ -1,3 +1,5 @@
+import { PropsWithChildren } from "react";
+
 export interface ShopLayoutProps {
   children: React.ReactNode;
 }
@@ -55,4 +57,15 @@ export type Item = Product | Event;
 export interface CartItem {
   item: Item;
   quantity: number;
+}
+
+export interface FilterTabsProps {
+  filter: "all" | "product" | "event";
+  search: string;
+  onFilterChange: (filter: "all" | "product" | "event") => void;
+  onSearchChange: (search: string) => void;
+}
+
+export interface QueryProviderProps {
+  children: React.ReactNode;
 }
