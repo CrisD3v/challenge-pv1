@@ -11,6 +11,15 @@ export interface CartButtonProps {
   onClick: () => void;
 }
 
+export interface ItemsGridProps {
+  items: (Product | Event)[];
+  isLoading?: boolean;
+}
+
+export interface ItemCardProps {
+  item: Item;
+}
+
 export type ItemType = "product" | "event";
 
 export interface BaseItem {
