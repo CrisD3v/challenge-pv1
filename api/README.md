@@ -1,4 +1,4 @@
-# E-Commerce API - NestJS con Arquitectura Hexagonal
+# CHALLENGE API - NestJS con Arquitectura Hexagonal
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
@@ -6,7 +6,7 @@
 
 ## Descripción
 
-API REST completa para e-commerce construida con NestJS, implementando arquitectura hexagonal y principios de Clean Architecture. Soporta gestión de productos, eventos, carritos de compras y órdenes con funcionalidades avanzadas de búsqueda y filtrado.
+API REST completa para Challenge construida con NestJS, implementando arquitectura hexagonal y principios de Clean Architecture. Soporta gestión de productos, eventos, carritos de compras y órdenes con funcionalidades avanzadas de búsqueda y filtrado.
 
 ## 🚀 Características Principales
 
@@ -438,13 +438,6 @@ NODE_ENV=production
 ## 📄 Licencia
 
 Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
-
-## 🆘 Soporte
-
-Para soporte y preguntas:
-- Crear un issue en GitHub
-- Revisar la documentación en `/docs`
-- Verificar los logs del servidor
 
 ## 🔄 Estados de Órdenes
 
