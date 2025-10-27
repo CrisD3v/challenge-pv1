@@ -2,9 +2,13 @@
 
 import { motion } from "motion/react";
 import { CartButton } from "@components/molecules/cart-button.molecule";
+import { StatusIndicator } from "@components/atoms/status-indicator.atom";
 import { HeaderProps } from "@/lib/types";
+import { useCart } from "@/providers/cart-provider";
 
 export const Header = ({ onCartOpen }: HeaderProps) => {
+  const { getTotalItems } = useCart();
+  const totalItems = getTotalItems();
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-lg">
       <div className="container mx-auto px-4 py-4">
@@ -20,7 +24,8 @@ export const Header = ({ onCartOpen }: HeaderProps) => {
             </p>
           </motion.div>
 
-          <CartButton totalItems={0} onClick={onCartOpen} />
+          <CartButton totalItems={totalItems} onClick={onCartOpen} />
+          <StatusIndicator />
         </div>
       </div>
     </header>

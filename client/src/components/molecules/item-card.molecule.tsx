@@ -1,13 +1,26 @@
 "use client";
 
 import { motion } from "motion/react";
-import { ItemCardProps } from "@/lib/types";
 import { Card, Badge, Button } from "@components/atoms";
 import { Calendar, Clock, MapPin, Package, ShoppingCart } from "lucide-react";
+import { ItemCardProps } from "@/lib/types";
+import { useCart } from "@/providers/cart-provider";
 
 export const ItemCard = ({ item }: ItemCardProps) => {
+  const { addToCart, isLoading, cart } = useCart();
   const isOutOfStock = item.stock === 0;
-  const quantityInCart = 0;
+
+  // Verificar cuántos de este item ya están en el carrito
+  const itemInCart = cart.find((cartItem) => cartItem.item.id === item.id);
+  const quantityInCart = itemInCart?.quantity || 0;
+  const canAddMore = quantityInCart < item.stock;
+  const isAtStockLimit = quantityInCart >= item.stock && item.stock > 0;
+
+  // Función para agregar el item al carrito
+  const handleAddToCart = async () => {
+    await addToCart(item);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -87,12 +100,19 @@ export const ItemCard = ({ item }: ItemCardProps) => {
           <div className="flex items-center justify-between pt-2">
             <span className="text-2xl font-bold">${item.price.toFixed(2)}</span>
             <Button
-              onClick={() => {}}
+              onClick={handleAddToCart}
+              disabled={isOutOfStock || isLoading || isAtStockLimit}
               size="sm"
-              className={`gap-2 transition-all duration-200`}
+              className={`gap-2 transition-all duration-200 ${
+                isAtStockLimit ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
               <ShoppingCart className="h-4 w-4" />
-              {isOutOfStock ? "Out of Stock" : "Add to Cart"}
+              {isOutOfStock
+                ? "Out of Stock"
+                : isAtStockLimit
+                  ? "Stock Limit Reached"
+                  : "Add to Cart"}
             </Button>
           </div>
         </div>

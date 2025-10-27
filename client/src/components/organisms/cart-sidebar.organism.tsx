@@ -5,11 +5,66 @@ import { ScrollArea } from "@ui/scroll-area";
 import { Button } from "@components/atoms/index";
 import { Loader2, ShoppingBag, X } from "lucide-react";
 import { CartSidebarProps } from "@/lib/types";
-
+import { useCart as useCartData } from "@/lib/queries/cart";
+import { useCart } from "@/providers/cart-provider";
 import Image from "next/image";
 
 export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
-  const cartItems = [];
+  const {
+    cartId,
+    getTotalItems,
+    getTotalPrice,
+    clearCart,
+    cart,
+    hasPendingOperations,
+  } = useCart(); // Providing cart data
+
+  const { data: cartData } = useCartData(cartId || undefined); // Fetching cart data
+
+  const totalItems = getTotalItems(); // Total de items en el carrito
+  const totalPrice = getTotalPrice(); // Total de precio en el carrito
+
+  // Usar siempre cart del provider (estado optimista)
+  const cartItems = cart;
+  // Detectar modo offline: si no hay cartId o si cartId es mock
+  const isMockMode = !cartId || cartId.startsWith("mock-cart-");
+
+  // Manejar el checkout
+  const handleCheckout = async () => {
+    if (cartItems.length === 0) return;
+
+    try {
+      // Normalizar items para el sistema de órdenes
+      const normalizedItems = cartItems.map((cartItem: any) => {
+        const item = cartItem.item || cartItem.product || cartItem.event;
+        return {
+          item: item || {
+            id: cartItem.productId || cartItem.eventId || "unknown",
+            name: "Unknown Item",
+            price: cartItem.unitPrice || 0,
+            type: cartItem.itemType?.toLowerCase() || "product",
+            thumbnail: "",
+            stock: 1,
+            description: "",
+            category: "",
+            brand: "",
+            date: "",
+            location: "",
+            duration: "",
+          },
+          quantity: cartItem.quantity,
+        };
+      });
+
+      // Limpiar carrito después de crear la orden
+      clearCart();
+
+      // Cerrar sidebar
+      onClose();
+    } catch (error) {
+      console.error("Checkout failed:", error);
+    }
+  };
 
   return (
     <>
@@ -37,6 +92,17 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                   <ShoppingBag className="h-5 w-5" />
                   <div>
                     <h2 className="text-xl font-semibold">Shopping Cart</h2>
+                    {isMockMode && totalItems > 0 && (
+                      <p className="text-xs text-yellow-600">
+                        Using offline mode
+                      </p>
+                    )}
+                    {hasPendingOperations && (
+                      <p className="text-xs text-blue-600 flex items-center gap-1">
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                        Syncing...
+                      </p>
+                    )}
                   </div>
                 </div>
                 <Button variant="ghost" size="icon" onClick={onClose}>
@@ -134,11 +200,11 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-muted-foreground">Total Items</span>
-                      <span className="font-medium">0</span>
+                      <span className="font-medium">{totalItems}</span>
                     </div>
                     <div className="flex items-center justify-between text-lg font-semibold">
                       <span>Total Price</span>
-                      <span>$0</span>
+                      <span>${(totalPrice || 0).toFixed(2)}</span>
                     </div>
                   </div>
 
@@ -146,7 +212,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                     <Button
                       className="w-full"
                       size="lg"
-                      onClick={() => {}}
+                      onClick={handleCheckout}
                       disabled={cartItems.length === 0}
                     >
                       Checkout
@@ -154,7 +220,7 @@ export const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                     <Button
                       variant="outline"
                       className="w-full bg-transparent"
-                      onClick={() => {}}
+                      onClick={clearCart}
                     >
                       Clear Cart
                     </Button>
