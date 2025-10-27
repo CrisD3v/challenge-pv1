@@ -4,6 +4,7 @@ import { QueryProvider } from "@/providers/query-provider";
 import { Toaster } from "sonner";
 import "./globals.css";
 import { CartProvider } from "@/providers/cart-provider";
+import { OrdersProvider } from "@/providers/orders-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +32,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryProvider>
-          <CartProvider>{children}</CartProvider>
+          <OrdersProvider>
+            <CartProvider>{children}</CartProvider>
+          </OrdersProvider>
         </QueryProvider>
-        <Toaster />
+        <Toaster richColors />
       </body>
     </html>
   );
