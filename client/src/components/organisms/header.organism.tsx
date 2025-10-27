@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "motion/react";
+import { CartButton } from "@components/molecules/cart-button.molecule";
+import { HeaderProps } from "@/lib/types";
 
-export const Header = () => {
+export const Header = ({ onCartOpen }: HeaderProps) => {
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-lg">
       <div className="container mx-auto px-4 py-4">
@@ -17,6 +19,8 @@ export const Header = () => {
               Welcome to our online store!
             </p>
           </motion.div>
+
+          <CartButton totalItems={0} onClick={onCartOpen} />
         </div>
       </div>
     </header>

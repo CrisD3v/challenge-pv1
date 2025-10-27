@@ -1,3 +1,3 @@
-export { Badge } from "@/components/ui/badge";
-export { Button } from "@/components/ui/button";
-export { Card } from "@/components/ui/card";
+export { Badge } from "@ui/badge";
+export { Button } from "@ui/button";
+export { Card } from "@ui/card";
