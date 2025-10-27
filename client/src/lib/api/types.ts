@@ -24,6 +24,32 @@ export interface ApiEvent {
   updatedAt: string;
 }
 
+export interface ApiCartItem {
+  id: string;
+  itemType: "PRODUCT" | "EVENT";
+  productId?: string;
+  eventId?: string;
+  quantity: number;
+  unitPrice: number;
+  product?: ApiProduct;
+  event?: ApiEvent;
+}
+
+export interface ApiCart {
+  id: string;
+  items: ApiCartItem[];
+  total: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateCartItemRequest {
+  itemType: "PRODUCT" | "EVENT";
+  productId?: string;
+  eventId?: string;
+  quantity: number;
+}
+
 // Transform functions
 export const transformApiProduct = (apiProduct: ApiProduct) => ({
   id: apiProduct.id,

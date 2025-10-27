@@ -60,6 +60,21 @@ export interface FilterTabsProps {
   onSearchChange: (search: string) => void;
 }
 
+export interface CartContextType {
+  cartId: string | null;
+  totalItems: number;
+  totalPrice: number;
+  cart: CartItem[];
+  addToCart: (item: Item) => void;
+  removeFromCart: (itemId: string) => void;
+  updateQuantity: (itemId: string, quantity: number) => void;
+  getTotalItems: () => number;
+  getTotalPrice: () => number;
+  clearCart: () => void;
+  isLoading: boolean;
+  hasPendingOperations: boolean;
+}
+
 export interface QueryProviderProps {
   children: React.ReactNode;
 }
