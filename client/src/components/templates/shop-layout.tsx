@@ -2,7 +2,6 @@
 import { useState, useMemo } from "react";
 import { Header } from "@components/organisms/header.organism";
 import { CartSidebar } from "@components/organisms/cart-sidebar.organism";
-import { ShopLayoutProps } from "@/lib/types";
 import { ItemsGrid } from "@components/organisms/items-grid.organism";
 
 import {
@@ -12,7 +11,7 @@ import {
 import { useAllItems } from "@queries/products";
 import { FilterTabs } from "../molecules/filter-tab.molecule";
 
-export const ShopLayout = ({ children }: ShopLayoutProps) => {
+export const ShopLayout = () => {
   const [isCartOpen, setIsCartOpen] = useState(false); // Estado inicial del carrito de compras
   const [filter, setFilter] = useState<"all" | "product" | "event">("all"); // Estado inicial del filtro
   const [search, setSearch] = useState(""); // Estado inicial de la búsqueda
@@ -39,7 +38,6 @@ export const ShopLayout = ({ children }: ShopLayoutProps) => {
 
         <ItemsGrid items={filteredItems} isLoading={isLoading} />
       </main>
-      {children}
       <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </div>
   );

@@ -1,9 +1,3 @@
-import { PropsWithChildren } from "react";
-
-export interface ShopLayoutProps {
-  children: React.ReactNode;
-}
-
 export interface HeaderProps {
   onCartOpen: () => void;
 }
