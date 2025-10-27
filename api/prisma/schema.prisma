@@ -126,3 +126,17 @@ enum OrderStatus {
   COMPLETED
   CANCELLED
 }
+
+model UploadedFile {
+  id           String   @id @default(cuid())
+  originalName String
+  fileName     String   @unique
+  mimeType     String
+  size         Int
+  path         String
+  url          String
+  createdAt    DateTime @default(now())
+
+  @@index([mimeType])
+  @@index([createdAt])
+}
