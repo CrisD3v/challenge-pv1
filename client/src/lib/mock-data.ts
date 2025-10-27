@@ -1,0 +1,103 @@
+import type { Product, Event } from "./types";
+
+export const mockProducts: Product[] = [
+  {
+    id: "p1",
+    name: "Wireless Headphones",
+    price: 299.99,
+    thumbnail: "/mock/modern-wireless-headphones.jpg",
+    description:
+      "Premium noise-cancelling wireless headphones with 30-hour battery life",
+    stock: 15,
+    type: "product",
+    category: "Electronics",
+    brand: "AudioTech",
+  },
+  {
+    id: "p2",
+    name: "Smart Watch Pro",
+    price: 449.99,
+    thumbnail: "/mock/sleek-smartwatch.jpg",
+    description: "Advanced fitness tracking with heart rate monitor and GPS",
+    stock: 8,
+    type: "product",
+    category: "Electronics",
+    brand: "TechWear",
+  },
+  {
+    id: "p3",
+    name: "Laptop Stand",
+    price: 79.99,
+    thumbnail: "/mock/aluminum-laptop-stand.jpg",
+    description: "Ergonomic aluminum laptop stand with adjustable height",
+    stock: 25,
+    type: "product",
+    category: "Accessories",
+    brand: "DeskPro",
+  },
+  {
+    id: "p4",
+    name: "Mechanical Keyboard",
+    price: 159.99,
+    thumbnail: "/mock/rgb-mechanical-keyboard.jpg",
+    description: "RGB backlit mechanical keyboard with custom switches",
+    stock: 0,
+    type: "product",
+    category: "Electronics",
+    brand: "KeyMaster",
+  },
+];
+
+export const mockEvents: Event[] = [
+  {
+    id: "e1",
+    name: "Web Development Summit 2025",
+    price: 299.0,
+    thumbnail: "/mock/tech-conference-stage.jpg",
+    description:
+      "Join industry leaders for a day of cutting-edge web development insights",
+    stock: 50,
+    type: "event",
+    date: "2025-06-15",
+    location: "San Francisco, CA",
+    duration: "8 hours",
+  },
+  {
+    id: "e2",
+    name: "Design Thinking Workshop",
+    price: 149.0,
+    thumbnail: "/mock/design-workshop-creative.jpg",
+    description: "Hands-on workshop to master design thinking methodologies",
+    stock: 20,
+    type: "event",
+    date: "2025-07-22",
+    location: "New York, NY",
+    duration: "4 hours",
+  },
+  {
+    id: "e3",
+    name: "AI & Machine Learning Bootcamp",
+    price: 499.0,
+    thumbnail: "/mock/ai-neural-network.png",
+    description:
+      "Intensive 2-day bootcamp covering AI fundamentals and practical applications",
+    stock: 30,
+    type: "event",
+    date: "2025-08-10",
+    location: "Austin, TX",
+    duration: "16 hours",
+  },
+  {
+    id: "e4",
+    name: "Startup Pitch Night",
+    price: 49.0,
+    thumbnail: "/mock/startup-pitch.png",
+    description:
+      "Network with investors and watch innovative startups pitch their ideas",
+    stock: 0,
+    type: "event",
+    date: "2025-05-30",
+    location: "Seattle, WA",
+    duration: "3 hours",
+  },
+];
