@@ -1,0 +1,20 @@
+# Dockerfile para desarrollo - Client
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Instalar pnpm
+RUN npm install -g pnpm
+
+# Copiar package files
+COPY package.json pnpm-lock.yaml* ./
+
+# Instalar dependencias
+RUN pnpm install
+
+# Copiar código fuente
+COPY . .
+
+EXPOSE 3000
+
+CMD ["pnpm", "dev"]
