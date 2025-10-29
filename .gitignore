@@ -1,0 +1,224 @@
+# =============================================================================
+# ARCHIVOS DE CONFIGURACIÓN Y SECRETOS
+# =============================================================================
+
+# Variables de entorno
+.env
+.env.local
+.env.docker
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# =============================================================================
+# DOCKER
+# =============================================================================
+
+# Archivos de Docker
+docker-compose.override.yml
+.dockerignore.local
+
+# Volúmenes y datos de Docker
+docker-data/
+postgres-data/
+redis-data/
+
+# =============================================================================
+# NODE.JS
+# =============================================================================
+
+# Dependencias
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Archivos de runtime
+.pnpm-store/
+.npm
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# =============================================================================
+# LOGS Y TEMPORALES
+# =============================================================================
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Archivos temporales
+*.tmp
+*.temp
+.cache/
+.temp/
+
+# =============================================================================
+# SISTEMA OPERATIVO
+# =============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# EDITORES E IDEs
+# =============================================================================
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# JetBrains IDEs
+.idea/
+*.swp
+*.swo
+*~
+
+# Sublime Text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# =============================================================================
+# ARCHIVOS DE BUILD Y DISTRIBUCIÓN
+# =============================================================================
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+
+# Coverage reports
+coverage/
+*.lcov
+.nyc_output/
+
+# =============================================================================
+# BASES DE DATOS Y UPLOADS
+# =============================================================================
+
+# Archivos de base de datos locales
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads y archivos subidos
+uploads/
+!uploads/.gitkeep
+public/uploads/
+!public/uploads/.gitkeep
+
+# =============================================================================
+# CERTIFICADOS Y CLAVES
+# =============================================================================
+
+# Certificados SSL
+*.pem
+*.key
+*.crt
+*.cert
+ssl/
+
+# Claves privadas
+*.private
+id_rsa
+id_ed25519
+
+# =============================================================================
+# ARCHIVOS ESPECÍFICOS DEL PROYECTO
+# =============================================================================
+
+# Archivos de configuración local
+config.local.json
+settings.local.json
+
+# Backups
+*.backup
+*.bak
+*.old
+
+# Archivos de prueba
+test-results/
+playwright-report/
+test-output/
+
+# =============================================================================
+# HERRAMIENTAS DE DESARROLLO
+# =============================================================================
+
+# ESLint cache
+.eslintcache
+
+# Prettier cache
+.prettiercache
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Turbo cache
+.turbo/
+
+# Vercel
+.vercel
+
+# Sentry
+.sentryclirc
