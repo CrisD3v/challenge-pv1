@@ -1,0 +1,31 @@
+# Dockerfile para desarrollo - API
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Instalar pnpm y netcat para health checks
+RUN npm install -g pnpm && apk add --no-cache netcat-openbsd
+
+# Copiar package files
+COPY package.json pnpm-lock.yaml* ./
+
+# Instalar dependencias
+RUN pnpm install
+
+# Copiar código fuente
+COPY . .
+
+# Generar Prisma client (con DATABASE_URL temporal)
+ENV DATABASE_URL="postgresql://temp:temp@temp:5432/temp"
+RUN npx prisma generate
+
+# Crear directorio para uploads
+RUN mkdir -p uploads
+
+EXPOSE 3001
+
+# Script de desarrollo
+COPY docker-entrypoint.dev.sh ./
+RUN chmod +x docker-entrypoint.dev.sh
+
+CMD ["./docker-entrypoint.dev.sh"]
