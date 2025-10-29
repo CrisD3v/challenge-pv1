@@ -1,32 +1,9 @@
-import { PrismaClient } from '@prisma/client';
-
-/**
- * Seeder para Items - Inserta datos de productos y eventos en la base de datos
- *
- * Este seeder proporciona datos de prueba para el desarrollo y testing,
- * incluyendo una variedad de productos y eventos con diferentes características.
- *
- * Características del seeder:
- * - Datos realistas para productos y eventos
- * - Precios variados para testing de cálculos
- * - Fechas futuras para eventos
- * - Descripciones detalladas para UI testing
- * - Imágenes de ejemplo para testing visual
- *
- * Uso:
- * - Desarrollo: Proporciona datos para probar la UI
- * - Testing: Datos consistentes para pruebas automatizadas
- * - Demo: Datos atractivos para presentaciones
- */
+// Seeder de items convertido a JavaScript para Docker
+const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-/**
- * Datos de productos para el seeder
- *
- * Incluye una variedad de productos con diferentes precios,
- * descripciones y características para testing completo.
- */
+// Datos de productos
 const productsData = [
   {
     name: 'Laptop Gaming ROG Strix',
@@ -100,12 +77,7 @@ const productsData = [
   },
 ];
 
-/**
- * Datos de eventos para el seeder
- *
- * Incluye eventos variados con fechas futuras, diferentes precios
- * y ubicaciones para testing completo del sistema.
- */
+// Datos de eventos
 const eventsData = [
   {
     name: 'Conferencia Tech Summit 2024',
@@ -209,22 +181,27 @@ const eventsData = [
   },
 ];
 
-/**
- * Función principal del seeder
- *
- * Ejecuta la inserción de datos de productos y eventos,
- * manejando errores y proporcionando feedback del proceso.
- */
 async function seedItems() {
   try {
     console.log('🌱 Iniciando seeder de items...');
 
-    // Limpiar datos existentes (opcional - comentar si no se desea)
+    // Solo limpiar productos y eventos (no tablas que pueden no existir)
     console.log('🧹 Limpiando datos existentes...');
-    await prisma.cartItem.deleteMany();
-    await prisma.orderItem.deleteMany();
-    await prisma.product.deleteMany();
-    await prisma.event.deleteMany();
+
+    // Verificar si las tablas existen antes de limpiar
+    try {
+      await prisma.product.deleteMany();
+      console.log('✅ Productos limpiados');
+    } catch (error) {
+      console.log('⚠️ Tabla products no existe o está vacía');
+    }
+
+    try {
+      await prisma.event.deleteMany();
+      console.log('✅ Eventos limpiados');
+    } catch (error) {
+      console.log('⚠️ Tabla events no existe o está vacía');
+    }
 
     // Insertar productos
     console.log('📦 Insertando productos...');
@@ -261,9 +238,7 @@ async function seedItems() {
   }
 }
 
-/**
- * Ejecutar el seeder si se llama directamente
- */
+// Ejecutar si se llama directamente
 if (require.main === module) {
   seedItems()
     .catch((error) => {
@@ -272,4 +247,4 @@ if (require.main === module) {
     });
 }
 
-export { seedItems };
+module.exports = { seedItems };
