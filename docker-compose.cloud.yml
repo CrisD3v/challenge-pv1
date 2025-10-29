@@ -1,0 +1,13 @@
+# Docker Compose Override - Con Base de Datos en la Nube
+version: '3.8'
+
+services:
+  # Backend configurado para DB externa
+  backend:
+    environment:
+      - USE_LOCAL_DB=false
+      - DATABASE_URL=${DATABASE_URL}
+      # Variables adicionales para DB en nube
+      - DB_SSL=${DB_SSL:-true}
+      - DB_SSL_REJECT_UNAUTHORIZED=${DB_SSL_REJECT_UNAUTHORIZED:-false}
+    # Sin dependencias de DB local

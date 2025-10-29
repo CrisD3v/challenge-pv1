@@ -1,0 +1,43 @@
+# Docker Compose para Desarrollo - Con hot reload
+version: '3.8'
+
+services:
+  # Frontend con hot reload
+  frontend-dev:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:3001/api
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - app-network
+    command: pnpm dev
+
+  # Backend con hot reload
+  backend-dev:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://postgres:password@database:5432/ecommerce_db
+      - USE_LOCAL_DB=true
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+      - /app/dist
+      - api-uploads:/app/uploads
+    networks:
+      - app-network
+    depends_on:
+      database:
+        condition: service_healthy
+    command: pnpm start:dev

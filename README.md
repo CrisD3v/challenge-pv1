@@ -38,9 +38,12 @@ Este proyecto está dividido en dos aplicaciones principales:
 ## 🚀 Inicio Rápido
 
 ### Prerrequisitos
-- Node.js 18+
+- Node.js 20+
 - pnpm (recomendado)
-- PostgreSQL (para API)
+- Docker y Docker Compose (recomendado)
+- PostgreSQL (solo para desarrollo local sin Docker)
+
+## 🐳 Opción 1: Con Docker (Recomendado)
 
 ### 1. Clonar el repositorio
 ```bash
@@ -48,7 +51,68 @@ git clone https://github.com/CrisD3v/challenge-pv1.git
 cd challenge-pv1
 ```
 
-### 2. Configurar API (Backend)
+### 2. Configurar variables de entorno
+```bash
+# Copiar archivo de ejemplo
+cp .env.docker.example .env.docker
+
+# Editar variables según tu configuración
+# Para DB local: USE_LOCAL_DB=true (por defecto)
+# Para DB nube: USE_LOCAL_DB=false y configurar DATABASE_URL
+```
+
+### 3. Ejecutar con Docker
+
+#### Con Makefile (Windows: instalar Make o usar comandos directos)
+```bash
+# Ver todos los comandos disponibles
+make help
+
+# Desarrollo con DB local (PostgreSQL en Docker)
+make dev-local
+
+# Desarrollo con DB en la nube
+make dev-cloud
+
+# Desarrollo completo con hot reload
+make dev-full
+
+# Producción
+make prod
+```
+
+#### Sin Makefile (comandos directos)
+```bash
+# Desarrollo con DB local
+docker-compose --env-file .env.docker -f docker-compose.yml -f docker-compose.local.yml up --build
+
+# Desarrollo con DB en la nube
+docker-compose --env-file .env.docker -f docker-compose.yml -f docker-compose.cloud.yml up --build
+
+# Parar servicios
+docker-compose down
+```
+
+#### Scripts PowerShell para Windows
+```powershell
+# Desarrollo con DB local
+.\scripts\dev-local.ps1
+
+# Desarrollo con DB en la nube
+.\scripts\dev-cloud.ps1
+
+# Desarrollo completo con hot reload
+.\scripts\dev-full.ps1
+```
+
+### 4. Acceder a la aplicación
+- **Frontend**: http://localhost:3000
+- **API**: http://localhost:3001/api
+- **Database**: localhost:5432 (solo con DB local)
+
+## 💻 Opción 2: Desarrollo Local (Sin Docker)
+
+### 1. Configurar API (Backend)
 ```bash
 cd api
 
@@ -68,7 +132,7 @@ pnpm run seed
 pnpm run start:dev
 ```
 
-### 3. Configurar Client (Frontend)
+### 2. Configurar Client (Frontend)
 ```bash
 cd client
 
@@ -83,7 +147,7 @@ cp .env.example .env.local
 pnpm dev
 ```
 
-### 4. Acceder a la aplicación
+### 3. Acceder a la aplicación
 - **Frontend**: http://localhost:3000
 - **API**: http://localhost:3001/api
 
@@ -165,10 +229,83 @@ El frontend funciona completamente sin API usando:
 - Transiciones válidas y consistentes
 - Creación optimista con sincronización robusta
 
+## 🐳 Configuración Docker
+
+### Servicios incluidos
+- **frontend**: Next.js (Puerto 3000)
+- **backend**: NestJS (Puerto 3001)
+- **database**: PostgreSQL (Puerto 5432) - Solo con DB local
+- **redis**: Cache (Puerto 6379) - Solo con DB local
+
+### Archivos de configuración
+- `docker-compose.yml` - Configuración base (frontend + backend)
+- `docker-compose.local.yml` - + PostgreSQL local
+- `docker-compose.cloud.yml` - + Configuración para DB externa
+- `docker-compose.dev.yml` - + Hot reload para desarrollo
+- `Makefile` - Comandos simplificados
+
+### Comandos útiles
+```bash
+# Ver logs
+make logs              # Todos los servicios
+make logs-api          # Solo API
+make logs-client       # Solo frontend
+
+# Mantenimiento
+make clean             # Limpiar contenedores y volúmenes
+make restart           # Reiniciar servicios
+make build             # Solo construir imágenes
+```
+
+## 🔧 Configuración de Variables de Entorno
+
+### Para Docker
+Edita `.env.docker` según tu configuración:
+
+```env
+# DB Local (por defecto)
+USE_LOCAL_DB=true
+DATABASE_URL=postgresql://postgres:password123@database:5432/ecommerce_db
+
+# DB en la Nube
+USE_LOCAL_DB=false
+DATABASE_URL=postgresql://user:password@your-cloud-db.com:5432/prod_db
+```
+
+## 🔍 Troubleshooting
+
+### Docker
+```bash
+# Si hay problemas con permisos (Windows)
+# Ejecutar como administrador o usar WSL2
+
+# Si los puertos están ocupados
+# Cambiar puertos en docker-compose.yml
+
+# Ver estado de servicios
+docker-compose ps
+
+# Limpiar todo y empezar de nuevo
+make clean
+make dev-local
+```
+
+### Desarrollo Local
+```bash
+# Si falla la conexión a la DB
+# Verificar que PostgreSQL esté corriendo
+# Verificar DATABASE_URL en .env
+
+# Si fallan las migraciones
+npx prisma migrate reset
+npx prisma migrate dev
+```
+
 ## 📚 Documentación Detallada
 
 - [Client README](./client/README.md) - Documentación completa del frontend
 - [API README](./api/README.md) - Documentación completa del backend
+- [Docker README](./README-Docker.md) - Documentación completa de Docker
 
 ---
 
